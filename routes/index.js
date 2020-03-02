@@ -18,30 +18,43 @@ const commonController=require('../controller/commonController');
 
 
 /* GET Route */
-router.get('/',function(req,res){
+router.get('/',commonController.checkauth,function(req,res){
   res.render('login.html');
 });
 
 
 
- router.get('/adduser',function(req,res){
+ router.get('/adduser',commonController.checkauth,function(req,res){
   
   res.render('userregister.html');
  });
 
- router.get('/addsubadmin',function(req,res){
+ router.get('/addsubadmin',commonController.checkauth,function(req,res){
   
   res.render('subadminregister.html');
 });
 //router.post('/register',commonController.register);
-router.post('/registeruser',commonController.registeruser);
+router.post('/registeruser',commonController.checkauth,commonController.registeruser);
 
- router.post('/registersubadmin',commonController.registersubadmin);
+ router.post('/registersubadmin',commonController.checkauth,commonController.registersubadmin);
 
 router.post('/login',commonController.login);
 
 
+//
+router.get('/userview',commonController.checkauth,commonController.userview);
+ 
+router.get('/subadminview',commonController.checkauth,commonController.subadminview);
 
+router.get('/modify/:id',commonController.checkauth,commonController.mod)
+
+router.post('/update',commonController.checkauth,commonController.modify);
+
+router.get('/delete/:id',commonController.checkauth,commonController.del)
+
+router.get('/logout',(req,res)=>{
+  res.clearCookie('name').redirect('/');
+})
 
 
 
